@@ -1,0 +1,84 @@
+/* Notes:
+   1. Use logical properties (inline-size, block-size, padding-* logical) instead of physical counterparts.
+   2. Use CSS nesting for state & descendant styling. */
+
+/* Accordion container */
+.accordion {
+  inline-size: 100%;
+}
+
+/* Accordion item */
+.accordionItem {
+  border-block-end: 1px solid var(--border);
+  &:last-child {
+    border-block-end: 0;
+  }
+}
+
+/* Accordion trigger */
+.accordionTriggerHeader {
+  display: flex;
+}
+
+.accordionTrigger {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-radius: var(--radius);
+  padding-block: 1rem;
+  padding-inline: 0;
+  text-align: start;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  transition: all 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+  &:focus-visible {
+    border-color: var(--focus);
+    box-shadow: 0 0 0 3px var(--focus);
+  }
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .chevronIcon {
+    fill: oklch(from var(--content) l c h / 0.7);
+    pointer-events: none;
+    inline-size: 1rem;
+    block-size: 1rem;
+    flex-shrink: 0;
+    transform: translateY(0.125rem);
+    transition: transform var(--duration) ease-out;
+  }
+  &[data-panel-open] .chevronIcon {
+    transform: translateY(0.125rem) rotate(180deg);
+  }
+}
+
+/* Accordion panel */
+.accordionPanel {
+  overflow: hidden;
+  font-size: 0.875rem;
+  block-size: var(--accordion-panel-height);
+  transition: block-size var(--duration) ease-out;
+  &[data-starting-style],
+  &[data-ending-style] {
+    block-size: 0;
+  }
+}
+
+/* Accordion inner content */
+.accordionInner {
+  padding-inline: 0.5rem;
+  padding-block-start: 0;
+  padding-block-end: 1rem;
+}

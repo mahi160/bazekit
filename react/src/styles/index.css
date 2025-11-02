@@ -1,0 +1,27 @@
+@import './theme.css';
+@import './reset.css';
+
+:root {
+  --background: var(--surface);
+  --foreground: var(--content);
+
+  --primary: var(--brand);
+  --primary-foreground: var(--contrast);
+
+  --secondary: var(--accent);
+  --secondary-foreground: var(--contrast);
+
+  --danger: var(--alert);
+  --danger-foreground: var(--contrast);
+
+  --focus: oklch(from var(--primary) l c h / 0.5);
+  --border: oklch(from var(--content) l c h / 0.2);
+
+  --duration: 200ms;
+  --spacing: 0.25rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}

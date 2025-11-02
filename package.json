@@ -1,0 +1,12 @@
+{
+  "name": "bazekit",
+  "version": "0.0.0",
+  "description": "An UI toolkit for building web applications.",
+  "scripts": {
+    "dev": "pnpm --prefix react run storybook"
+  },
+  "keywords": [],
+  "author": "mahi160",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.18.3"
+}
