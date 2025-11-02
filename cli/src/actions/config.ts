@@ -10,7 +10,7 @@ export interface BazekitConfig {
 
 const RC_NAME = ".bazekitrc";
 const REGISTRY_URL =
-  "https://raw.githubusercontent.com/mahi160/bazekit-cli/refs/heads/main/registry/registry.json";
+  "https://raw.githubusercontent.com/mahi160/bazekit/refs/heads/prod/cli/registry/registry.json";
 
 export function configPath(): string {
   return path.join(process.cwd(), RC_NAME);
