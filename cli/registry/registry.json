@@ -1,0 +1,27 @@
+{
+  "source": {
+    "type": "github",
+    "url": "https://raw.githubusercontent.com/mahi160/bazekit-ui",
+    "branch": "main",
+    "basePath": "src/components"
+  },
+  "snippets": {
+    "button": {
+      "type": "component",
+      "folder": "button",
+      "files": ["Button.tsx", "Button.module.css"]
+    },
+    "accordion": {
+      "type": "component",
+      "folder": "accordion",
+      "files": ["Accordion.tsx", "Accordion.module.css"],
+      "dependencies": ["@base-ui/react"]
+    },
+    "checkbox": {
+      "type": "component",
+      "folder": "checkbox",
+      "files": ["Checkbox.tsx", "Checkbox.module.css"],
+      "dependencies": ["@base-ui/react"]
+    }
+  }
+}

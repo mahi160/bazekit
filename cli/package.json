@@ -1,0 +1,35 @@
+{
+  "name": "bazekit",
+  "version": "0.2.0",
+  "description": "Bazekit UI component fetcher CLI",
+  "type": "commonjs",
+  "bin": {
+    "bazekit": "dist/bazekit.cjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "pnpm run typecheck && esbuild src/index.ts --bundle --platform=node --format=cjs --target=node20 --outfile=dist/bazekit.cjs --packages=external --minify && chmod +x dist/bazekit.cjs",
+    "prepare": "pnpm run build",
+    "start": "node dist/bazekit.cjs"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "esbuild": "^0.25.12",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "bazekit",
+    "ui",
+    "components",
+    "cli"
+  ],
+  "author": "",
+  "license": "Apache-2.0"
+}
