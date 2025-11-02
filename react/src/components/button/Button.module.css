@@ -14,28 +14,28 @@
     text-underline-offset calc(var(--duration) / 2);
 
   /* Variants */
-  &[data-variant='default'] {
+  &[data-variant="default"] {
     background-color: var(--primary);
     color: var(--primary-foreground);
     &:hover {
       background-color: oklch(from var(--primary) l c h / 0.9);
     }
   }
-  &[data-variant='alert'] {
+  &[data-variant="alert"] {
     background-color: var(--danger);
     color: var(--danger-foreground);
     &:hover {
       background-color: oklch(from var(--danger) l c h / 0.9);
     }
   }
-  &[data-variant='secondary'] {
+  &[data-variant="secondary"] {
     background-color: oklch(from var(--secondary) l c h / 0.1);
     color: var(--secondary);
     &:hover {
       background-color: oklch(from var(--secondary) l c h / 0.2);
     }
   }
-  &[data-variant='outline'] {
+  &[data-variant="outline"] {
     background-color: transparent;
     color: var(--primary);
     border-color: var(--primary);
@@ -45,14 +45,14 @@
       border-color: transparent;
     }
   }
-  &[data-variant='ghost'] {
+  &[data-variant="ghost"] {
     background-color: transparent;
     color: var(--primary);
     &:hover {
       background-color: oklch(from var(--primary) l c h / 0.1);
     }
   }
-  &[data-variant='link'] {
+  &[data-variant="link"] {
     background-color: transparent;
     color: var(--primary);
     text-underline-offset: 0.1rem;
@@ -63,32 +63,39 @@
   }
 
   /* Sizes */
-  &[data-size='sm'] {
+  &[data-size="sm"] {
     padding-inline: 0.5rem;
     padding-block: 0.25rem;
     font-size: 0.75rem;
     block-size: 1.75rem;
     font-weight: 400;
   }
-  &[data-size='md'] {
+  &[data-size="md"] {
     padding-inline: 1rem;
     padding-block: 0.5rem;
     font-size: 0.875rem;
     block-size: 2rem;
   }
-  &[data-size='lg'] {
+  &[data-size="lg"] {
     padding-inline: 1.5rem;
     padding-block: 0.75rem;
     font-size: 1rem;
     block-size: 2.5rem;
   }
-  &[data-size='icon'] {
+  &[data-size="icon"] {
     inline-size: 2rem;
     block-size: 2rem;
     padding: 0;
     font-size: 1rem;
   }
 
+  /* Appearance*/
+  &[data-rounded="true"] {
+    border-radius: 100vh;
+  }
+  &[data-floating="true"] {
+    box-shadow: var(--shadow);
+  }
   /* States */
   &:focus {
     outline: none;
@@ -99,8 +106,8 @@
   }
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.3;
-    filter: grayscale(0.8);
+    opacity: 0.75;
+    filter: grayscale(0.9);
     pointer-events: none;
     &:hover {
       background-color: inherit;

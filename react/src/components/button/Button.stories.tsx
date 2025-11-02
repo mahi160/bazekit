@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 
@@ -24,13 +24,39 @@ const meta: Meta<typeof Button> = {
       control: "select",
       options: ["default", "secondary", "alert", "outline", "ghost", "link"],
       description: "Visual style variant",
-      table: { type: { summary: "string" }, defaultValue: { summary: "default" } },
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "default" },
+        category: "Appearance",
+      },
     },
     size: {
       control: "select",
       options: ["sm", "md", "lg", "icon"],
       description: "Size variant",
-      table: { type: { summary: "string" }, defaultValue: { summary: "md" } },
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "md" },
+        category: "Appearance",
+      },
+    },
+    rounded: {
+      control: "boolean",
+      description: "Apply rounded corners",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Appearance",
+      },
+    },
+    floating: {
+      control: "boolean",
+      description: "Apply floating style",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+        category: "Appearance",
+      },
     },
   },
 };
@@ -40,13 +66,17 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: { children: "Click Me" },
-  parameters: { docs: { description: { story: "Basic button for a primary action." } } },
+  parameters: {
+    docs: { description: { story: "Basic button for a primary action." } },
+  },
 };
 
 export const Variants: Story = {
-  parameters: { docs: { description: { story: "Show semantic & emphasis variants." } } },
+  parameters: {
+    docs: { description: { story: "Show semantic & emphasis variants." } },
+  },
   render: () => (
-    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
       <Button>Default</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
@@ -58,41 +88,76 @@ export const Variants: Story = {
 };
 
 export const Sizes: Story = {
-  parameters: { docs: { description: { story: "Adjust footprint for density & hierarchy." } } },
+  parameters: {
+    docs: {
+      description: { story: "Adjust footprint for density & hierarchy." },
+    },
+  },
   render: () => (
-    <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
-      <Button size="icon" aria-label="Settings">⚙️</Button>
+    </div>
+  ),
+};
+
+export const Appearance: Story = {
+  parameters: {
+    docs: {
+      description: { story: "Rounded buttons for a softer appearance." },
+    },
+  },
+  render: () => (
+    <div style={{ display: "flex", gap: "1rem" }}>
+      <Button rounded>Rounded</Button>
+      <Button floating>Floating</Button>
     </div>
   ),
 };
 
 export const IconWithLabel: Story = {
-  parameters: { docs: { description: { story: "Buttons can mix icon & text for clarity." } } },
+  parameters: {
+    docs: {
+      description: { story: "Buttons can mix icon & text for clarity." },
+    },
+  },
   render: () => (
-    <Button variant="secondary">⚙️ Settings</Button>
+    <Button variant="secondary">
+      <span className="material-symbols-rounded">settings</span>
+      Settings
+    </Button>
   ),
 };
 
 export const IconOnly: Story = {
-  parameters: { docs: { description: { story: "Icon‑only requires accessible aria-label." } } },
+  parameters: {
+    docs: {
+      description: { story: "Icon‑only requires accessible aria-label." },
+    },
+  },
   render: () => (
-    <div style={{ display: "flex", gap: "0.5rem" }}>
-      <Button size="icon" aria-label="Settings">⚙️</Button>
-      <Button size="icon" aria-label="Add">+</Button>
-      <Button size="icon" variant="ghost" aria-label="Close">×</Button>
+    <div style={{ display: "flex", gap: "1rem" }}>
+      <Button size="icon" aria-label="Settings" variant="outline">
+        <span className="material-symbols-rounded">settings</span>
+      </Button>
+      <Button size="icon" aria-label="Add">
+        <span className="material-symbols-rounded">add</span>
+      </Button>
+      <Button size="icon" variant="ghost" aria-label="Close">
+        <span className="material-symbols-rounded">close</span>
+      </Button>
     </div>
   ),
 };
 
-export const DisabledStates: Story = {
-  parameters: { docs: { description: { story: "Disabled removes focus & interaction." } } },
+export const Disabled: Story = {
+  parameters: {
+    docs: { description: { story: "Disabled removes focus & interaction." } },
+  },
   render: () => (
-    <div style={{ display: "flex", gap: "0.5rem" }}>
-      <Button>Enabled</Button>
-      <Button disabled>Disabled</Button>
+    <div style={{ display: "flex", gap: "1rem" }}>
+      <Button disabled>Default Disabled</Button>
       <Button variant="secondary" disabled>
         Secondary Disabled
       </Button>
@@ -103,10 +168,13 @@ export const DisabledStates: Story = {
   ),
 };
 
-export const LoadingSimulation: Story = {
-  parameters: { docs: { description: { story: "Simulated loading state pattern." } } },
+export const Loading: Story = {
+  parameters: {
+    docs: { description: { story: "Simulated loading state pattern." } },
+  },
   render: () => {
-    const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [loading, setLoading] = React.useState(false);
     return (
       <Button
         disabled={loading}
@@ -115,17 +183,8 @@ export const LoadingSimulation: Story = {
           setTimeout(() => setLoading(false), 1200);
         }}
       >
-        {loading ? "Processing…" : "Trigger Async"}
+        {loading ? "Processing…" : "Trigger Loading"}
       </Button>
     );
   },
-};
-
-export const FullWidth: Story = {
-  parameters: { docs: { description: { story: "Expand to parent width for prominence." } } },
-  render: () => (
-    <div style={{ width: 320 }}>
-      <Button style={{ width: "100%" }}>Full Width</Button>
-    </div>
-  ),
 };
