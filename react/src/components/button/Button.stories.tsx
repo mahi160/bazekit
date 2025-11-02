@@ -2,6 +2,22 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./Button";
 
+// Simple layout helper to reduce inline style duplication
+const Stack: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ style, children, ...rest }) => (
+  <div
+    style={{
+      display: "flex",
+      gap: "1rem",
+      flexWrap: "wrap",
+      alignItems: "center",
+      ...style,
+    }}
+    {...rest}
+  >
+    {children}
+  </div>
+);
+
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
@@ -10,181 +26,138 @@ const meta: Meta<typeof Button> = {
     layout: "centered",
     docs: {
       description: {
-        component: `\nThe **Button** component triggers actions, submits forms, and represents primary or secondary intents. Use concise, verb‑forward labels; supply an \`aria-label\` for icon‑only buttons.\n\nCommon variants: semantic differentiation (default, secondary, alert), emphasis control (outline, ghost, link). Size variants support ergonomic density.\n        `,
+        component: `\nThe **Button** component provides an accessible trigger for user actions: submitting forms, confirming flows, or invoking secondary utilities.\n\n**Core guidelines**:\n- Use clear verb‑forward labels (e.g. "Save", "Continue", "Delete").\n- Only one visually dominant (default/primary intent) button per view.\n- Supply an \`aria-label\` for icon‑only usage.\n- Avoid disabling as a sole way to convey context—pair with messaging when possible.\n\n**Variants** communicate semantic intent or emphasis: default, secondary, alert (destructive), outline, ghost (low emphasis), link (inline contextual).\n**Sizes** adapt to density: sm, md (default), lg, icon.\n**Appearance props**: \`rounded\` for pill shape; \`floating\` for elevated emphasis.\n        `,
       },
     },
   },
   argTypes: {
     children: {
       control: "text",
-      description: "Button label",
+      description: "Button label content",
       table: { type: { summary: "ReactNode" }, category: "Content" },
     },
     variant: {
       control: "select",
       options: ["default", "secondary", "alert", "outline", "ghost", "link"],
       description: "Visual style variant",
-      table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "default" },
-        category: "Appearance",
-      },
+      table: { type: { summary: "string" }, defaultValue: { summary: "default" }, category: "Appearance" },
     },
     size: {
       control: "select",
       options: ["sm", "md", "lg", "icon"],
       description: "Size variant",
-      table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "md" },
-        category: "Appearance",
-      },
+      table: { type: { summary: "string" }, defaultValue: { summary: "md" }, category: "Appearance" },
     },
     rounded: {
       control: "boolean",
-      description: "Apply rounded corners",
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-        category: "Appearance",
-      },
+      description: "Pill shape (full rounding)",
+      table: { type: { summary: "boolean" }, defaultValue: { summary: "false" }, category: "Appearance" },
     },
     floating: {
       control: "boolean",
-      description: "Apply floating style",
-      table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: "false" },
-        category: "Appearance",
-      },
+      description: "Elevated (shadow) style",
+      table: { type: { summary: "boolean" }, defaultValue: { summary: "false" }, category: "Appearance" },
     },
   },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
-  args: { children: "Click Me" },
-  parameters: {
-    docs: { description: { story: "Basic button for a primary action." } },
-  },
+  args: { children: "Click Me", variant: "default", size: "md" },
+  parameters: { docs: { description: { story: "Baseline button for a primary action." } } },
 };
 
 export const Variants: Story = {
-  parameters: {
-    docs: { description: { story: "Show semantic & emphasis variants." } },
-  },
+  parameters: { docs: { description: { story: "Semantic & emphasis variants for differing intents." } } },
   render: () => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+    <Stack>
       <Button>Default</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
       <Button variant="link">Link</Button>
       <Button variant="alert">Destructive</Button>
-    </div>
+    </Stack>
   ),
 };
 
 export const Sizes: Story = {
-  parameters: {
-    docs: {
-      description: { story: "Adjust footprint for density & hierarchy." },
-    },
-  },
+  parameters: { docs: { description: { story: "Different sizes for density and prominence." } } },
   render: () => (
-    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+    <Stack>
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
-    </div>
+      <Button size="icon" aria-label="Settings">⚙️</Button>
+    </Stack>
   ),
 };
 
 export const Appearance: Story = {
-  parameters: {
-    docs: {
-      description: { story: "Rounded buttons for a softer appearance." },
-    },
-  },
+  parameters: { docs: { description: { story: "Optional appearance props for stylistic variation." } } },
   render: () => (
-    <div style={{ display: "flex", gap: "1rem" }}>
+    <Stack>
       <Button rounded>Rounded</Button>
       <Button floating>Floating</Button>
-    </div>
+      <Button rounded floating>
+        Rounded + Floating
+      </Button>
+    </Stack>
   ),
 };
 
 export const IconWithLabel: Story = {
-  parameters: {
-    docs: {
-      description: { story: "Buttons can mix icon & text for clarity." },
-    },
-  },
+  parameters: { docs: { description: { story: "Icon paired with text enhances recognizability." } } },
   render: () => (
     <Button variant="secondary">
-      <span className="material-symbols-rounded">settings</span>
+      <span aria-hidden="true" style={{ marginRight: "0.5rem" }}>⚙️</span>
       Settings
     </Button>
   ),
 };
 
 export const IconOnly: Story = {
-  parameters: {
-    docs: {
-      description: { story: "Icon‑only requires accessible aria-label." },
-    },
-  },
+  parameters: { docs: { description: { story: "Icon‑only buttons must provide an aria-label." } } },
   render: () => (
-    <div style={{ display: "flex", gap: "1rem" }}>
-      <Button size="icon" aria-label="Settings" variant="outline">
-        <span className="material-symbols-rounded">settings</span>
-      </Button>
-      <Button size="icon" aria-label="Add">
-        <span className="material-symbols-rounded">add</span>
-      </Button>
-      <Button size="icon" variant="ghost" aria-label="Close">
-        <span className="material-symbols-rounded">close</span>
-      </Button>
-    </div>
+    <Stack style={{ flexWrap: "nowrap" }}>
+      <Button size="icon" aria-label="Settings">⚙️</Button>
+      <Button size="icon" aria-label="Add">＋</Button>
+      <Button size="icon" variant="ghost" aria-label="Close">×</Button>
+    </Stack>
   ),
 };
 
 export const Disabled: Story = {
-  parameters: {
-    docs: { description: { story: "Disabled removes focus & interaction." } },
-  },
+  parameters: { docs: { description: { story: "Disabled buttons remove focus and interaction." } } },
   render: () => (
-    <div style={{ display: "flex", gap: "1rem" }}>
+    <Stack>
       <Button disabled>Default Disabled</Button>
-      <Button variant="secondary" disabled>
-        Secondary Disabled
-      </Button>
-      <Button variant="outline" disabled>
-        Outline Disabled
-      </Button>
-    </div>
+      <Button variant="secondary" disabled>Secondary Disabled</Button>
+      <Button variant="outline" disabled>Outline Disabled</Button>
+      <Button variant="ghost" disabled>Ghost Disabled</Button>
+    </Stack>
   ),
 };
 
+const LoadingExample: React.FC = () => {
+  const [loading, setLoading] = React.useState(false);
+  return (
+    <Button
+      disabled={loading}
+      onClick={() => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 1200);
+      }}
+    >
+      {loading ? "Processing…" : "Trigger Loading"}
+    </Button>
+  );
+};
+
 export const Loading: Story = {
-  parameters: {
-    docs: { description: { story: "Simulated loading state pattern." } },
-  },
-  render: () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [loading, setLoading] = React.useState(false);
-    return (
-      <Button
-        disabled={loading}
-        onClick={() => {
-          setLoading(true);
-          setTimeout(() => setLoading(false), 1200);
-        }}
-      >
-        {loading ? "Processing…" : "Trigger Loading"}
-      </Button>
-    );
-  },
+  parameters: { docs: { description: { story: "Pattern for indicating an async/loading state." } } },
+  render: () => <LoadingExample />,
 };
