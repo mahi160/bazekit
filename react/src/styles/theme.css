@@ -1,5 +1,5 @@
 :root {
-  --brand: oklch(55% 0.2 250); /* Electric blue – strong, trustworthy */
+  --brand: oklch(55% 0.2 240); /* Electric blue – strong, trustworthy */
   --accent: oklch(65% 0.14 190); /* Calm teal */
   --alert: oklch(58% 0.23 25); /* Coral red – friendly but attention-grabbing */
   --surface: oklch(99% 0 250); /* Pure neutral white surface */
@@ -9,8 +9,10 @@
   --radius: 0.375rem;
 }
 
-[data-theme='dark'] {
-  --brand: oklch(70% 0.22 250); /* Slightly brighter for glow on dark surfaces */
+[data-theme="dark"] {
+  --brand: oklch(
+    70% 0.22 250
+  ); /* Slightly brighter for glow on dark surfaces */
   --accent: oklch(70% 0.16 190); /* Brighter teal glow */
   --alert: oklch(65% 0.25 30); /* Warm red-orange for visual balance */
   --surface: oklch(18% 0 250); /* Deep neutral background */
