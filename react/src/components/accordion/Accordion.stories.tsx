@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -9,97 +10,184 @@ import {
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
     docs: {
       description: {
-        component: `\nThe **Accordion** component provides a vertically stacked set of expandable sections for organizing related content. It supports single or multiple item expansion, keyboard navigation, and accessible semantics.\n\n## Overview\nUse an accordion to reduce cognitive load when presenting lengthy or categorized information. Each item contains a trigger (header) and a panel (content region) that can be expanded or collapsed.\n\n## Key Features\n- **Multiple Expansion Modes**: Allow one (classic disclosure) or several panels open concurrently.\n- **Accessible Structure**: Implements proper header associations and ARIA where required via the underlying primitive.\n- **Keyboard Support**: Arrow keys, Home/End traversal (in primitive), Enter/Space to toggle items.\n- **Composable Items**: Import and combine \`AccordionItem\`, \`AccordionTrigger\`, and \`AccordionPanel\`.\n- **Theming Ready**: Style via CSS Modules with data attributes for animation, state, and theme integration.\n\n## Usage Guidelines\n- Prefer an accordion when content categories are equally weighted and users may need to compare them.\n- Avoid nesting multiple deep levels—consider navigation or tabs for complex hierarchies.\n- Keep trigger labels concise; surface critical summary information in the panel.\n\n## Accessibility\n- Trigger elements are interactive and announce expansion state.\n- Panels are associated with their triggers for screen readers.\n- Maintain logical heading order to support assistive technologies.\n\n## Example\nBelow is a simple single-selection accordion using character bios from *The Big Bang Theory* for demonstration text.\n        `,
+        component: `\nThe **Accordion** component presents related content in vertically stacked, collapsible sections. It reduces visual noise and supports both single and multi‑section expansion patterns while preserving accessibility and keyboard operability.\n\n## When To Use\n- Group parallel categories or FAQs.\n- Provide progressive disclosure for long, detailed, or optional content.\n- Facilitate quick scanning while avoiding overwhelming the viewport.\n\nAvoid accordions for critical, always-needed information or deeply nested information architectures (prefer tabs, navigation, or separate pages).\n\n## Features\n- **Single or Multiple Expansion**: Constrain to one open section or allow comparison across several.\n- **Accessible Semantics**: Proper heading/trigger roles and controlled focus states.\n- **Keyboard Support**: Arrow navigation (implementation dependent), Home/End, Enter/Space activation.\n- **Composable API**: \`AccordionItem\`, \`AccordionTrigger\`, and \`AccordionPanel\` allow granular styling and structural control.\n- **Styling Hooks**: Data attributes and predictable DOM enable theming and animations.\n\n## Accessibility Notes\n- Triggers expose expanded/collapsed state to assistive tech.\n- Each panel is programmatically associated with its trigger.\n- Preserve logical heading order in surrounding layouts.\n\n## Design Guidelines\n- Keep trigger labels concise (≤ 2 lines).\n- Put essential summary/context in the trigger; place extended narrative or rich media inside the panel.\n- Limit the total number of items to what can be meaningfully scanned (often ≤ 8).\n\n## Stories\nThe stories demonstrate single selection, multiple selection, controlled state, and a disabled item variant.\n        `,
       },
+    },
+  },
+  argTypes: {
+    multiple: {
+      control: { type: "boolean" },
+      description:
+        "Allow more than one panel to remain expanded simultaneously.",
+      table: { category: "Behavior" },
+    },
+    defaultValue: {
+      control: false,
+      description: "Initial open item values when uncontrolled.",
+      table: { category: "Behavior" },
     },
   },
 };
 
 export default meta;
+
 type Story = StoryObj<typeof Accordion>;
 
-export const Default: Story = {
-  render: () => (
-    <div style={{ width: 420, padding: 20 }}>
-      <Accordion defaultValue={["item-2"]}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Sheldon Cooper</AccordionTrigger>
-          <AccordionPanel>
-            <p style={{ textWrap: "pretty" }}>
-              Theoretical physicist with an exceptional intellect and a
-              regimented routine. Known for precise logic, catchphrases, and
-              unwavering commitment to scientific rigor.
-            </p>
-          </AccordionPanel>
-        </AccordionItem>
+const baseItems = (
+  <>
+    <AccordionItem value="item-1">
+      <AccordionTrigger>Authentication & Access</AccordionTrigger>
+      <AccordionPanel>
+        <p style={{ textWrap: "pretty" }}>
+          Outlines supported identity providers, session management strategy,
+          and token refresh flow. Includes rate limits for authorization checks
+          and guidance on least‑privilege role design.
+        </p>
+      </AccordionPanel>
+    </AccordionItem>
+    <AccordionItem value="item-2">
+      <AccordionTrigger>Performance & Caching</AccordionTrigger>
+      <AccordionPanel>
+        <p style={{ textWrap: "pretty" }}>
+          Describes our edge caching policy, cache invalidation triggers, and
+          client hint usage. Provides baseline SLO targets and profiling touch
+          points for critical paths.
+        </p>
+      </AccordionPanel>
+    </AccordionItem>
+    <AccordionItem value="item-3">
+      <AccordionTrigger>Data Governance</AccordionTrigger>
+      <AccordionPanel>
+        <p style={{ textWrap: "pretty" }}>
+          Details retention windows, encryption at rest/in transit standards,
+          classification tiers, and compliant deletion workflows with audit
+          transparency.
+        </p>
+      </AccordionPanel>
+    </AccordionItem>
+  </>
+);
 
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Leonard Hofstadter</AccordionTrigger>
-          <AccordionPanel>
-            <p style={{ textWrap: "pretty" }}>
-              Experimental physicist balancing professional curiosity with
-              social diplomacy. Frequently mediates between Sheldon's structure
-              and the group's spontaneity.
-            </p>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Penny</AccordionTrigger>
-          <AccordionPanel>
-            <p style={{ textWrap: "pretty" }}>
-              Outgoing, pragmatic, and emotionally perceptive. Offers grounded
-              perspective on the group's scientific pursuits while driving
-              interpersonal growth.
-            </p>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </div>
-  ),
-};
-
-export const SingleOpen: Story = {
+export const Basic: Story = {
+  name: "Basic (Single Selection)",
+  args: { multiple: false, defaultValue: ["item-1"] },
   parameters: {
     docs: {
       description: {
         story:
-          "Demonstrates allowing multiple panels to remain expanded concurrently for cross-referencing.",
+          "Single‑selection mode: only one panel may be expanded at a time.",
       },
     },
   },
-  render: () => (
-    <div style={{ width: 420, padding: 20 }}>
-      <Accordion defaultValue={["item-1"]} multiple={false}>
+  render: (args) => (
+    <div style={{ width: 480, padding: 24 }}>
+      <Accordion {...args}>{baseItems}</Accordion>
+    </div>
+  ),
+};
+
+export const MultipleOpen: Story = {
+  name: "Multiple Selection",
+  args: { multiple: true, defaultValue: ["item-1", "item-2"] },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Multiple‑selection mode: several panels remain open for side‑by‑side reference.",
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ width: 480, padding: 24 }}>
+      <Accordion {...args}>{baseItems}</Accordion>
+    </div>
+  ),
+};
+
+export const Controlled: Story = {
+  name: "Controlled State",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Externally manages expanded panels via `value` and `onValueChange`. Useful for syncing URL params or analytics.",
+      },
+    },
+  },
+  render: () => {
+    const [open, setOpen] = useState<string[]>(["item-2"]);
+    return (
+      <div style={{ width: 480, padding: 24, display: "grid", gap: 12 }}>
+        <Accordion value={open} onValueChange={setOpen} multiple>
+          {baseItems}
+        </Accordion>
+        <div style={{ fontSize: 12, color: "#555" }}>
+          Open panels: {open.length ? open.join(", ") : "(none)"}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button
+            type="button"
+            onClick={() => setOpen(["item-1", "item-2", "item-3"])}
+            style={{ padding: "4px 8px" }}
+          >
+            Expand All
+          </button>
+          <button
+            type="button"
+            onClick={() => setOpen([])}
+            style={{ padding: "4px 8px" }}
+          >
+            Collapse All
+          </button>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const WithDisabledItem: Story = {
+  name: "With Disabled Item",
+  args: { multiple: false, defaultValue: ["item-1"] },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Illustrates handling of a disabled item (non interactive). Disabled state styling handled by component styles.",
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ width: 480, padding: 24 }}>
+      <Accordion {...args}>
         <AccordionItem value="item-1">
-          <AccordionTrigger>Amy Farrah Fowler</AccordionTrigger>
+          <AccordionTrigger>Operational Metrics</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              Neurobiologist who blends analytical thinking with emerging social
-              confidence. Encourages collaborative research and personal
-              development.
+              Summaries of throughput, error budgets, latency percentiles, and
+              utilization indicators across core services.
             </p>
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Howard Wolowitz</AccordionTrigger>
+        <AccordionItem value="item-2" disabled>
+          <AccordionTrigger>Legacy Module (Deprecated)</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              Aerospace engineer with strong technical improvisation skills.
-              Contributes engineering solutions and mission-oriented insights.
+              This section is intentionally disabled pending full removal from
+              the platform.
             </p>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem value="item-3">
-          <AccordionTrigger>Raj Koothrappali</AccordionTrigger>
+          <AccordionTrigger>Release Notes</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              Astrophysicist focused on celestial phenomena. Integrates
-              observational data with the group’s theoretical frameworks.
+              Consolidated changes, migration steps, and rollback procedures for
+              the current minor release.
             </p>
           </AccordionPanel>
         </AccordionItem>
