@@ -1,0 +1,54 @@
+.switch {
+  --bg: var(--foreground);
+  --w: calc(10 * var(--spacing));
+  --h: calc(6 * var(--spacing));
+
+  inline-size: var(--w);
+  block-size: var(--h);
+  border-radius: 100svh;
+  padding: 2px;
+  border: 1px solid var(--bg);
+  cursor: pointer;
+  opacity: 0.5;
+  background-color: transparent;
+  transition: opacity var(--duration) ease-in-out;
+
+  &[data-checked] {
+    opacity: 1;
+  }
+
+  & .thumb {
+    display: block;
+    block-size: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: var(--bg);
+    transition: translate var(--duration) ease-in-out;
+
+    &[data-checked] {
+      translate: calc(var(--w) - var(--h)) 0;
+    }
+  }
+
+  &[data-color="brand"] {
+    --bg: var(--primary);
+  }
+
+  &[data-color="accent"] {
+    --bg: var(--secondary)
+  }
+
+  &[data-color="alert"] {
+    --bg: var(--danger)
+  }
+
+  &[data-size="sm"] {
+    --w: calc(6 * var(--spacing));
+    --h: calc(3.5 * var(--spacing))
+  }
+
+  &[data-size="lg"] {
+    --w: calc(16 * var(--spacing));
+    --h: calc(8 * var(--spacing))
+  }
+}
