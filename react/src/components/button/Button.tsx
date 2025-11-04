@@ -11,7 +11,6 @@ export interface IButtonProps
 export const Button: React.FC<IButtonProps> = (props) => {
   const {
     children,
-    className,
     size = "md",
     variant = "default",
     type = "button",
@@ -19,11 +18,10 @@ export const Button: React.FC<IButtonProps> = (props) => {
     floating,
     ...rest
   } = props;
-  const classes = [styles.button, className].filter(Boolean).join(" ");
 
   return (
     <button
-      className={classes}
+      className={styles.button}
       data-size={size}
       data-variant={variant}
       data-rounded={rounded ? "true" : "false"}
