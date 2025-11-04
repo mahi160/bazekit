@@ -1,0 +1,38 @@
+.checkbox {
+  inline-size: 1rem;
+  block-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  border-radius: 0.25rem;
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--primary);
+
+  cursor: pointer;
+  transition: background-color var(--duration) ease, border-color var(--duration) ease, box-shadow var(--duration) ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &[data-checked] {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+
+.indicator {
+  display: flex;
+}
