@@ -15,7 +15,20 @@ const meta: Meta<typeof Accordion> = {
     layout: "centered",
     docs: {
       description: {
-        component: `\nThe **Accordion** component presents related content in vertically stacked, collapsible sections. It reduces visual noise and supports both single and multi‑section expansion patterns while preserving accessibility and keyboard operability.\n\n## When To Use\n- Group parallel categories or FAQs.\n- Provide progressive disclosure for long, detailed, or optional content.\n- Facilitate quick scanning while avoiding overwhelming the viewport.\n\nAvoid accordions for critical, always-needed information or deeply nested information architectures (prefer tabs, navigation, or separate pages).\n\n## Features\n- **Single or Multiple Expansion**: Constrain to one open section or allow comparison across several.\n- **Accessible Semantics**: Proper heading/trigger roles and controlled focus states.\n- **Keyboard Support**: Arrow navigation (implementation dependent), Home/End, Enter/Space activation.\n- **Composable API**: \`AccordionItem\`, \`AccordionTrigger\`, and \`AccordionPanel\` allow granular styling and structural control.\n- **Styling Hooks**: Data attributes and predictable DOM enable theming and animations.\n\n## Accessibility Notes\n- Triggers expose expanded/collapsed state to assistive tech.\n- Each panel is programmatically associated with its trigger.\n- Preserve logical heading order in surrounding layouts.\n\n## Design Guidelines\n- Keep trigger labels concise (≤ 2 lines).\n- Put essential summary/context in the trigger; place extended narrative or rich media inside the panel.\n- Limit the total number of items to what can be meaningfully scanned (often ≤ 8).\n\n## Stories\nThe stories demonstrate single selection, multiple selection, controlled state, and a disabled item variant.\n        `,
+        component: `
+The **Accordion** component presents collapsible sections for progressive content disclosure with WAI-ARIA compliance.
+
+## Usage
+- Group related information categories (FAQs, settings)
+- Keep trigger labels concise (1-2 lines)
+- Limit to 3-8 items for scannability
+- Use unique \`value\` props for each item
+
+## Accessibility
+- Full keyboard navigation (Space, Enter, Tab)
+- ARIA attributes for screen readers
+- Proper focus management and expansion states
+`,
       },
     },
   },
@@ -41,32 +54,34 @@ type Story = StoryObj<typeof Accordion>;
 const baseItems = (
   <>
     <AccordionItem value="item-1">
-      <AccordionTrigger>Authentication & Access</AccordionTrigger>
+      <AccordionTrigger>Jim Halpert</AccordionTrigger>
       <AccordionPanel>
         <p style={{ textWrap: "pretty" }}>
-          Outlines supported identity providers, session management strategy,
-          and token refresh flow. Includes rate limits for authorization checks
-          and guidance on least‑privilege role design.
+          Jim is a salesman at Dunder Mifflin known for his pranks on Dwight,
+          his relationship with Pam, and his dry sense of humor. He's the
+          everyman of the office who often looks directly at the camera with
+          knowing expressions.
         </p>
       </AccordionPanel>
     </AccordionItem>
     <AccordionItem value="item-2">
-      <AccordionTrigger>Performance & Caching</AccordionTrigger>
+      <AccordionTrigger>Dwight Schrute</AccordionTrigger>
       <AccordionPanel>
         <p style={{ textWrap: "pretty" }}>
-          Describes our edge caching policy, cache invalidation triggers, and
-          client hint usage. Provides baseline SLO targets and profiling touch
-          points for critical paths.
+          Dwight is the Assistant Regional Manager (or Assistant TO the Regional
+          Manager) who runs a beet farm and considers himself a survivalist.
+          He's Michael's most loyal employee and Jim's frequent prank victim.
         </p>
       </AccordionPanel>
     </AccordionItem>
     <AccordionItem value="item-3">
-      <AccordionTrigger>Data Governance</AccordionTrigger>
+      <AccordionTrigger>Michael Scott</AccordionTrigger>
       <AccordionPanel>
         <p style={{ textWrap: "pretty" }}>
-          Details retention windows, encryption at rest/in transit standards,
-          classification tiers, and compliant deletion workflows with audit
-          transparency.
+          Michael is the Regional Manager who thinks he's the "World's Best
+          Boss." He loves to make jokes (often inappropriate) and considers his
+          employees his friends. His coffee mug confirms his self-proclaimed
+          title.
         </p>
       </AccordionPanel>
     </AccordionItem>
@@ -80,12 +95,12 @@ export const Basic: Story = {
     docs: {
       description: {
         story:
-          "Single‑selection mode: only one panel may be expanded at a time.",
+          "Demonstrates single-selection behavior where only one accordion panel can be expanded at a time. This mode is ideal for interfaces where users should focus on one section of content at a time, such as FAQ sections or step-by-step processes.",
       },
     },
   },
   render: (args) => (
-    <div style={{ width: 480, padding: 24 }}>
+    <div style={{ width: 480 }}>
       <Accordion {...args}>{baseItems}</Accordion>
     </div>
   ),
@@ -98,12 +113,12 @@ export const MultipleOpen: Story = {
     docs: {
       description: {
         story:
-          "Multiple‑selection mode: several panels remain open for side‑by‑side reference.",
+          "Demonstrates multiple-selection behavior where several accordion panels can remain expanded simultaneously. This mode enables content comparison and is useful for complex forms, settings panels, or when users need to reference multiple sections at once.",
       },
     },
   },
   render: (args) => (
-    <div style={{ width: 480, padding: 24 }}>
+    <div style={{ width: 480 }}>
       <Accordion {...args}>{baseItems}</Accordion>
     </div>
   ),
@@ -115,34 +130,45 @@ export const Controlled: Story = {
     docs: {
       description: {
         story:
-          "Externally manages expanded panels via `value` and `onValueChange`. Useful for syncing URL params or analytics.",
+          "Demonstrates controlled state management where accordion expansion is managed externally via state. This pattern enables programmatic control over which panels are open, integration with external data sources, and complex interaction patterns with other UI components.",
       },
     },
   },
-  render: () => {
+  render: function Render() {
     const [open, setOpen] = useState<string[]>(["item-2"]);
     return (
-      <div style={{ width: 480, padding: 24, display: "grid", gap: 12 }}>
+      <div style={{ width: 480, display: "grid", gap: 16 }}>
         <Accordion value={open} onValueChange={setOpen} multiple>
           {baseItems}
         </Accordion>
-        <div style={{ fontSize: 12, color: "#555" }}>
-          Open panels: {open.length ? open.join(", ") : "(none)"}
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
           <button
             type="button"
             onClick={() => setOpen(["item-1", "item-2", "item-3"])}
-            style={{ padding: "4px 8px" }}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
           >
-            Expand All
+            Hire Everyone
           </button>
           <button
             type="button"
             onClick={() => setOpen([])}
-            style={{ padding: "4px 8px" }}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#dc3545",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
           >
-            Collapse All
+            You're All Fired
           </button>
         </div>
       </div>
@@ -157,37 +183,40 @@ export const WithDisabledItem: Story = {
     docs: {
       description: {
         story:
-          "Illustrates handling of a disabled item (non interactive). Disabled state styling handled by component styles.",
+          "Demonstrates disabled accordion items that prevent user interaction while maintaining visual presence in the interface. This pattern is useful for conditional content, progressive disclosure based on user permissions, or temporarily unavailable sections.",
       },
     },
   },
   render: (args) => (
-    <div style={{ width: 480, padding: 24 }}>
+    <div style={{ width: 480 }}>
       <Accordion {...args}>
         <AccordionItem value="item-1">
-          <AccordionTrigger>Operational Metrics</AccordionTrigger>
+          <AccordionTrigger>Kevin's Famous Chili Recipe</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              Summaries of throughput, error budgets, latency percentiles, and
-              utilization indicators across core services.
+              The secret is to undercook the onions. Everybody is going to get
+              to know each other in the pot. But Kevin spilled it all over the
+              carpet, so now we'll never know the full recipe.
             </p>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem value="item-2" disabled>
-          <AccordionTrigger>Legacy Module (Deprecated)</AccordionTrigger>
+          <AccordionTrigger>Toby's Fun Activities</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              This section is intentionally disabled pending full removal from
-              the platform.
+              This section is intentionally disabled because Toby is the worst.
+              NO GOD! NO GOD, PLEASE NO! NO! NO! NOOOOOO!
             </p>
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem value="item-3">
-          <AccordionTrigger>Release Notes</AccordionTrigger>
+          <AccordionTrigger>Dwight's Beet Farm</AccordionTrigger>
           <AccordionPanel>
             <p style={{ textWrap: "pretty" }}>
-              Consolidated changes, migration steps, and rollback procedures for
-              the current minor release.
+              Schrute Farms is a 60-acre beet farm located in Honesdale,
+              Pennsylvania. It also serves as a bed and breakfast, though guests
+              often mistake it for a themed restaurant. Bears, beets, Battlestar
+              Galactica.
             </p>
           </AccordionPanel>
         </AccordionItem>

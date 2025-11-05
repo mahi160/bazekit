@@ -11,18 +11,19 @@ const meta: Meta<typeof Checkbox> = {
     docs: {
       description: {
         component: `
-A checkbox allows users to select one or more options from a set. It supports checked, unchecked, and indeterminate states.
-
-## Features
-- Multiple selection support
-- Indeterminate state for partial selections
-- Keyboard navigation with Space key
-- Accessible with proper ARIA attributes
-- Works with forms and controlled components
+The **Checkbox** component enables multiple selection from option sets with support for checked, unchecked, and indeterminate states.
 
 ## Usage
-Always pair checkboxes with clear labels and use them for independent choices that don't affect each other.
-        `,
+- Use for independent, multiple selections
+- Always pair with descriptive labels
+- Use indeterminate for parent/child relationships
+- Group related checkboxes with \`CheckboxGroup\`
+
+## Accessibility
+- Keyboard navigation with Space key
+- Screen reader compatible with ARIA attributes
+- Proper label association required
+`,
       },
     },
   },
@@ -36,7 +37,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: "The default checkbox state. Always pair with a descriptive label for accessibility.",
+        story:
+          "Demonstrates the basic checkbox in its default unchecked state. Essential for binary choices and form inputs. Always pair with descriptive labels for accessibility and clear user understanding of the selection purpose.",
       },
     },
   },
@@ -45,12 +47,11 @@ export const Default: Story = {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "8px",
+        gap: "12px",
         cursor: "pointer",
       }}
     >
-      <Checkbox />
-      I agree to the terms and conditions
+      <Checkbox />I agree that Jim is not a bear
     </label>
   ),
 };
@@ -59,7 +60,8 @@ export const Checked: Story = {
   parameters: {
     docs: {
       description: {
-        story: "A checkbox with a pre-checked state using `defaultChecked`. Useful for default selections or previously saved preferences.",
+        story:
+          "Shows a checkbox in the checked state using the `defaultChecked` prop. Useful for default selections, pre-established preferences, or when certain options should be enabled by default in forms and settings interfaces.",
       },
     },
   },
@@ -68,12 +70,12 @@ export const Checked: Story = {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "8px",
+        gap: "12px",
         cursor: "pointer",
       }}
     >
       <Checkbox defaultChecked />
-      Already agreed
+      Bears eat beets
     </label>
   ),
 };
@@ -82,33 +84,34 @@ export const Disabled: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Disabled checkboxes prevent user interaction. They can be in either checked or unchecked states while disabled. Use when options are temporarily unavailable or when permissions don't allow changes.",
+        story:
+          "Demonstrates disabled checkboxes in both checked and unchecked states. Disabled checkboxes prevent user interaction while maintaining visual presence, ideal for showing locked preferences, restricted options, or system-controlled settings.",
       },
     },
   },
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
       <label
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          opacity: 0.6,
+          gap: "12px",
+          opacity: 0.5,
         }}
       >
         <Checkbox disabled />
-        Disabled unchecked
+        Michael is the best boss (HR disabled this)
       </label>
       <label
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "8px",
-          opacity: 0.6,
+          gap: "12px",
+          opacity: 0.5,
         }}
       >
         <Checkbox disabled defaultChecked />
-        Disabled checked
+        That's what she said (permanently enabled)
       </label>
     </div>
   ),
@@ -118,7 +121,8 @@ export const Indeterminate: Story = {
   parameters: {
     docs: {
       description: {
-        story: "The indeterminate state represents a 'mixed' selection, commonly used when a parent checkbox has some (but not all) child options selected. Displays a horizontal line instead of a checkmark.",
+        story:
+          "Demonstrates the indeterminate state, which represents partial selection or an undefined state. Commonly used for parent checkboxes when some (but not all) child options are selected, or to indicate mixed states in complex selection scenarios.",
       },
     },
   },
@@ -127,12 +131,12 @@ export const Indeterminate: Story = {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "8px",
+        gap: "12px",
         cursor: "pointer",
       }}
     >
       <Checkbox indeterminate />
-      Partially selected
+      Sometimes I'll start a sentence and I don't even know where it's going
     </label>
   ),
 };
@@ -141,29 +145,33 @@ export const Controlled: Story = {
   parameters: {
     docs: {
       description: {
-        story: "A controlled checkbox where the state is managed by React. Use `checked` and `onCheckedChange` props to control the state externally. Perfect for forms and complex state management.",
+        story:
+          "Shows a controlled checkbox using `checked` and `onCheckedChange` props for external state management. This pattern enables integration with form libraries, complex validation logic, and dynamic interfaces where checkbox state needs to be managed programmatically.",
       },
     },
   },
-  render: () => {
+  render: function Render() {
     const [checked, setChecked] = useState(false);
 
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <label
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "8px",
+            gap: "12px",
             cursor: "pointer",
           }}
         >
-          <Checkbox checked={checked} onCheckedChange={setChecked} />
-          Controlled checkbox
+          <Checkbox checked={checked} onCheckedChange={setChecked} />I declare
+          BANKRUPTCY!
         </label>
-        <p style={{ fontSize: "14px", color: "#666" }}>
-          Status: {checked ? "Checked" : "Unchecked"}
-        </p>
+        <div>
+          Declaration Status:{" "}
+          {checked
+            ? "Michael has officially declared it!"
+            : "Awaiting declaration..."}
+        </div>
       </div>
     );
   },
@@ -173,11 +181,12 @@ export const Group: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Multiple checkboxes working together in a group. Each checkbox operates independently, allowing users to select multiple options. Shows real-time selection feedback below the options.",
+        story:
+          "Demonstrates multiple independent checkboxes working together in a group context. Each checkbox maintains its own state while contributing to a collective selection, perfect for multi-select forms, preference panels, and option lists with real-time feedback.",
       },
     },
   },
-  render: () => {
+  render: function Render() {
     const [selected, setSelected] = useState<string[]>([]);
 
     const handleChange = (value: string, checked: boolean) => {
@@ -190,64 +199,66 @@ export const Group: Story = {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <h3 style={{ margin: 0, fontSize: "16px", fontWeight: "600" }}>
-          Select your interests:
-        </h3>
         <CheckboxGroup>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+          >
             <label
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "12px",
                 cursor: "pointer",
               }}
             >
               <Checkbox
-                value="design"
-                checked={selected.includes("design")}
-                onCheckedChange={(checked) => handleChange("design", checked)}
+                value="sales"
+                checked={selected.includes("sales")}
+                onCheckedChange={(checked) => handleChange("sales", checked)}
               />
-              Design
+              Sales (with Jim and Dwight's... dynamic)
             </label>
             <label
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "12px",
                 cursor: "pointer",
               }}
             >
               <Checkbox
-                value="development"
-                checked={selected.includes("development")}
+                value="accounting"
+                checked={selected.includes("accounting")}
                 onCheckedChange={(checked) =>
-                  handleChange("development", checked)
+                  handleChange("accounting", checked)
                 }
               />
-              Development
+              Accounting (home of Kevin's famous chili)
             </label>
             <label
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "12px",
                 cursor: "pointer",
               }}
             >
               <Checkbox
-                value="marketing"
-                checked={selected.includes("marketing")}
-                onCheckedChange={(checked) => handleChange("marketing", checked)}
+                value="reception"
+                checked={selected.includes("reception")}
+                onCheckedChange={(checked) =>
+                  handleChange("reception", checked)
+                }
               />
-              Marketing
+              Reception (Pam's domain of artistry)
             </label>
           </div>
         </CheckboxGroup>
         {selected.length > 0 && (
-          <p style={{ fontSize: "14px", color: "#666", margin: 0 }}>
-            Selected: {selected.join(", ")}
-          </p>
+          <div>
+            Michael says you're hired for:{" "}
+            <strong>{selected.join(", ")}</strong>
+          </div>
         )}
       </div>
     );

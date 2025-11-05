@@ -1,101 +1,144 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from './Avatar'
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "./Avatar";
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Components/Avatar',
+  title: "Components/Avatar",
   component: Avatar,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: `\nThe **Avatar** component renders a user or entity representation via an image with automatic text fallback. It focuses on clarity, consistency, and graceful degradation.\n\n## When To Use\n- Identify people in lists, comments, activity feeds.\n- Represent ownership (project, team) or status.\n- Group participants in collaborative views.\n\n## Features\n- **Image + Fallback**: Falls back to initials when the image cannot load.\n- **Grouping**: Compact overlap layout for sets of identities.\n- **Composable**: Use \`AvatarImage\`, \`AvatarFallback\`, and \`AvatarGroup\`.\n- **Accessible**: Meaningful \`alt\` text; fallback letters announced as normal text.\n\n## Accessibility Notes\n- Keep \`alt\` concise (the subject only).\n- Provide contrast around circular bounds.\n- Avoid empty fallback content; supply initials.\n\n## Stories\nBasic usage, image failure fallback, grouped avatars, and mixed image/fallback sets.\n        `,
+        component: `
+The **Avatar** component displays user or entity identity through images with automatic fallback to text initials.
+
+## Usage
+- Use high-quality, centered images
+- Provide meaningful \`alt\` text
+- Use 1-2 character initials for fallbacks
+- Limit groups to 3-5 visible avatars
+
+## Accessibility
+- Required \`alt\` attribute on images
+- Fallback text read by screen readers
+- Proper focus management for interactive avatars
+`,
       },
     },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof Avatar>
+type Story = StoryObj<typeof Avatar>;
 
 export const Basic: Story = {
-  name: 'Basic',
+  name: "Basic",
   parameters: {
     docs: {
-      description: { story: 'Single avatar with a successful image load.' },
+      description: {
+        story:
+          "Demonstrates basic avatar functionality with a successful image load. Shows the standard use case where an image source is available and renders correctly, representing individual user identity in the interface.",
+      },
     },
   },
   render: () => (
     <Avatar>
-      <AvatarImage src="https://picsum.photos/seed/user-a/160" alt="User A" />
-      <AvatarFallback>UA</AvatarFallback>
+      <AvatarImage
+        src="https://picsum.photos/seed/michael-scott/160"
+        alt="Michael Scott"
+      />
+      <AvatarFallback>MS</AvatarFallback>
     </Avatar>
   ),
-}
+};
 
 export const Fallback: Story = {
-  name: 'Image Fallback',
+  name: "Image Fallback",
   parameters: {
     docs: {
-      description: { story: 'Shows initials when the image source is unreachable.' },
+      description: {
+        story:
+          "Demonstrates fallback behavior when image sources fail to load or are unavailable. The avatar gracefully degrades to display user initials, ensuring consistent visual representation and maintaining interface reliability across varying network conditions.",
+      },
     },
   },
   render: () => (
     <Avatar>
-      <AvatarImage src="https://invalid.example/missing.jpg" alt="User B" />
-      <AvatarFallback>UB</AvatarFallback>
+      <AvatarImage
+        src="https://invalid.example/missing.jpg"
+        alt="Jim Halpert"
+      />
+      <AvatarFallback>JH</AvatarFallback>
     </Avatar>
   ),
-}
+};
 
 export const Group: Story = {
-  name: 'Grouped',
+  name: "Grouped",
   parameters: {
     docs: {
-      description: { story: 'Compact overlapping avatars for multiple participants.' },
+      description: {
+        story:
+          "Demonstrates the AvatarGroup component for displaying multiple user identities in a compact, overlapping layout. Ideal for showing team members, collaborators, or participants in shared activities while conserving interface space.",
+      },
     },
   },
   render: () => (
     <AvatarGroup>
       <Avatar>
-        <AvatarImage src="https://picsum.photos/seed/user-c/160" alt="User C" />
-        <AvatarFallback>UC</AvatarFallback>
+        <AvatarImage
+          src="https://picsum.photos/seed/dwight/160"
+          alt="Dwight Schrute"
+        />
+        <AvatarFallback>DS</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage src="https://picsum.photos/seed/user-d/160" alt="User D" />
-        <AvatarFallback>UD</AvatarFallback>
+        <AvatarImage
+          src="https://picsum.photos/seed/pam/160"
+          alt="Pam Beesly"
+        />
+        <AvatarFallback>PB</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarFallback>UE</AvatarFallback>
+        <AvatarFallback>KC</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarFallback>UF</AvatarFallback>
+        <AvatarFallback>AM</AvatarFallback>
       </Avatar>
     </AvatarGroup>
   ),
-}
+};
 
 export const Mixed: Story = {
-  name: 'Mixed Sources',
+  name: "Mixed Sources",
   parameters: {
     docs: {
-      description: { story: 'Combines loaded images and fallback initials inside a group.' },
+      description: {
+        story:
+          "Demonstrates mixed avatar sources within a group, showing both successful image loads and fallback initials. This represents real-world scenarios where some users have profile images while others rely on text fallbacks, creating natural interface variation.",
+      },
     },
   },
   render: () => (
     <AvatarGroup>
       <Avatar>
-        <AvatarImage src="https://picsum.photos/seed/user-g/160" alt="User G" />
-        <AvatarFallback>UG</AvatarFallback>
+        <AvatarImage
+          src="https://picsum.photos/seed/stanley/160"
+          alt="Stanley Hudson"
+        />
+        <AvatarFallback>SH</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage src="https://invalid.example/offline.jpg" alt="User H" />
-        <AvatarFallback>UH</AvatarFallback>
+        <AvatarImage
+          src="https://invalid.example/offline.jpg"
+          alt="Creed Bratton"
+        />
+        <AvatarFallback>CB</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarFallback>UI</AvatarFallback>
+        <AvatarFallback>TO</AvatarFallback>
       </Avatar>
     </AvatarGroup>
   ),
-}
+};

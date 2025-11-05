@@ -30,17 +30,19 @@ const meta: Meta<typeof Button> = {
     docs: {
       description: {
         component: `
-The **Button** component provides an accessible trigger for user actions: submitting forms, confirming flows, or invoking secondary utilities.
+The **Button** component provides accessible triggers for user actions including form submission, navigation, and utility functions.
 
-**Core guidelines**:
-- Use clear verb‑forward labels (e.g. "Save", "Continue", "Delete").
-- Only one visually dominant (default/primary intent) button per view.
-- Supply an \`aria-label\` for icon‑only usage.
-- Avoid disabling as a sole way to convey context—pair with messaging when possible.
+## Usage
+- Use clear, action-oriented labels ("Save", "Delete", "Continue")
+- Only one primary button per section/view
+- Provide \`aria-label\` for icon-only buttons
+- Reserve \`alert\` variant for destructive actions
 
-**Variants** communicate semantic intent or emphasis: default, secondary, alert (destructive), outline, ghost (low emphasis), link (inline contextual).
-**Sizes** adapt to density: sm, md (default), lg, icon.
-**Appearance props**: \`rounded\` for pill shape; \`floating\` for elevated emphasis.
+## Accessibility
+- Semantic HTML \`<button>\` with proper ARIA
+- Keyboard navigation (Enter, Space)
+- Screen reader compatible loading/disabled states
+- Minimum 44px touch targets on mobile
 `,
       },
     },
@@ -97,9 +99,14 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
-  args: { children: "Click Me", variant: "default", size: "md" },
+  args: { children: "That's what she said", variant: "default", size: "md" },
   parameters: {
-    docs: { description: { story: "Baseline button for a primary action." } },
+    docs: {
+      description: {
+        story:
+          "The default button variant with medium size. Use this for primary actions and main call-to-action elements in your interface.",
+      },
+    },
   },
 };
 
@@ -107,18 +114,19 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Semantic & emphasis variants for differing intents.",
+        story:
+          "Different button variants for various semantic meanings and visual emphasis levels. Use 'default' for primary actions, 'secondary' for supporting actions, 'outline' for subtle emphasis, 'ghost' for minimal presence, 'link' for inline actions, and 'alert' for destructive operations.",
       },
     },
   },
   render: () => (
     <Stack>
-      <Button>Default</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
-      <Button variant="alert">Destructive</Button>
+      <Button>World's Best Boss</Button>
+      <Button variant="secondary">Assistant to the Regional Manager</Button>
+      <Button variant="outline">Beet Farmer</Button>
+      <Button variant="ghost">Silent Jim</Button>
+      <Button variant="link">Dunder Mifflin</Button>
+      <Button variant="alert">Fire Guy</Button>
     </Stack>
   ),
 };
@@ -126,14 +134,17 @@ export const Variants: Story = {
 export const Sizes: Story = {
   parameters: {
     docs: {
-      description: { story: "Different sizes for density and prominence." },
+      description: {
+        story:
+          "Three size variants for different interface densities and visual prominence needs. Use 'sm' for compact layouts, 'md' (default) for standard interfaces, and 'lg' for high-emphasis actions.",
+      },
     },
   },
   render: () => (
     <Stack>
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
+      <Button size="sm">Teapot</Button>
+      <Button size="md">Dundie Award</Button>
+      <Button size="lg">World's Largest Beet</Button>
     </Stack>
   ),
 };
@@ -142,16 +153,17 @@ export const Appearance: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Optional appearance props for stylistic variation.",
+        story:
+          "Optional appearance modifiers that can be combined with any variant. The 'rounded' prop creates pill-shaped buttons, while 'floating' adds elevation with shadow effects.",
       },
     },
   },
   render: () => (
     <Stack>
-      <Button rounded>Rounded</Button>
-      <Button floating>Floating</Button>
+      <Button rounded>Kevin's Chili</Button>
+      <Button floating>Angela's Cat</Button>
       <Button rounded floating>
-        Rounded + Floating
+        Creed's Quality Assurance
       </Button>
     </Stack>
   ),
@@ -160,13 +172,16 @@ export const Appearance: Story = {
 export const IconWithLabel: Story = {
   parameters: {
     docs: {
-      description: { story: "Icon paired with text enhances recognizability." },
+      description: {
+        story:
+          "Buttons that combine icons with text labels for enhanced clarity and recognition. Icons help users quickly identify the button's purpose while text provides explicit confirmation.",
+      },
     },
   },
   render: () => (
-    <Button variant="secondary">
+    <Button variant="secondary" style={{ gap: "8px" }}>
       <span className="material-symbols-rounded">settings</span>
-      Settings
+      Conference Room Settings
     </Button>
   ),
 };
@@ -174,18 +189,21 @@ export const IconWithLabel: Story = {
 export const IconOnly: Story = {
   parameters: {
     docs: {
-      description: { story: "Icon‑only buttons must provide an aria-label." },
+      description: {
+        story:
+          "Icon-only buttons for space-constrained interfaces or when the icon's meaning is universally understood. Always provide an aria-label for accessibility when using this pattern.",
+      },
     },
   },
   render: () => (
-    <Stack style={{ flexWrap: "nowrap" }}>
-      <Button size="icon" aria-label="Settings">
+    <Stack>
+      <Button size="icon" aria-label="Office Settings">
         <span className="material-symbols-rounded">settings</span>
       </Button>
-      <Button size="icon" aria-label="Add">
+      <Button size="icon" aria-label="Add Employee">
         <span className="material-symbols-rounded">add</span>
       </Button>
-      <Button size="icon" variant="ghost" aria-label="Close">
+      <Button size="icon" variant="ghost" aria-label="Fire Employee">
         <span className="material-symbols-rounded">close</span>
       </Button>
     </Stack>
@@ -195,20 +213,23 @@ export const IconOnly: Story = {
 export const Disabled: Story = {
   parameters: {
     docs: {
-      description: { story: "Disabled buttons remove focus and interaction." },
+      description: {
+        story:
+          "Disabled buttons prevent user interaction and visually communicate when actions are unavailable. Use when operations are temporarily restricted, permissions are insufficient, or prerequisites aren't met.",
+      },
     },
   },
   render: () => (
     <Stack>
-      <Button disabled>Default Disabled</Button>
+      <Button disabled>Parkour!</Button>
       <Button variant="secondary" disabled>
-        Secondary Disabled
+        Fax Machine
       </Button>
       <Button variant="outline" disabled>
-        Outline Disabled
+        Printer Broken
       </Button>
       <Button variant="ghost" disabled>
-        Ghost Disabled
+        Toby's Fun
       </Button>
     </Stack>
   ),
@@ -224,7 +245,7 @@ const LoadingExample: React.FC = () => {
         setTimeout(() => setLoading(false), 1200);
       }}
     >
-      {loading ? "Processing…" : "Trigger Loading"}
+      {loading ? "Michael is thinking…" : "Start Dundie Awards"}
     </Button>
   );
 };
@@ -232,7 +253,10 @@ const LoadingExample: React.FC = () => {
 export const Loading: Story = {
   parameters: {
     docs: {
-      description: { story: "Pattern for indicating an async/loading state." },
+      description: {
+        story:
+          "Pattern for handling asynchronous operations. Disable the button and update the text content to indicate loading state, preventing duplicate submissions while providing user feedback.",
+      },
     },
   },
   render: () => <LoadingExample />,
