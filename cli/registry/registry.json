@@ -16,6 +16,24 @@
       "folder": "accordion",
       "files": ["Accordion.tsx", "Accordion.module.css"],
       "dependencies": ["@base-ui-components/react"]
+    },
+    "avatar": {
+      "type": "component",
+      "folder": "avatar",
+      "files": ["Avatar.tsx", "Avatar.module.css"],
+      "dependencies": ["@base-ui-components/react"]
+    },
+    "checkbox": {
+      "type": "component",
+      "folder": "checkbox",
+      "files": ["Checkbox.tsx", "Checkbox.module.css"],
+      "dependencies": ["@base-ui-components/react"]
+    },
+    "switch": {
+      "type": "component",
+      "folder": "switch",
+      "files": ["Switch.tsx", "Switch.module.css"],
+      "dependencies": ["@base-ui-components/react"]
     }
   }
 }
