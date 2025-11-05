@@ -87,13 +87,9 @@ export const Controlled: Story = {
           onCheckedChange={(v) => setOn(Boolean(v))}
           aria-label="Dwight's Security Mode"
         />
-        <div>Bears Status: {on ? "DETECTED" : "ALL CLEAR"}</div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <Button onClick={() => setOn(true)} variant="alert">
-            Alert! Bears!
-          </Button>
-          <Button onClick={() => setOn(false)}>False Alarm</Button>
-        </div>
+        <Button onClick={() => setOn((p) => !p)} variant="alert">
+          Toggle Alert
+        </Button>
       </div>
     );
   },
@@ -109,12 +105,7 @@ export const Disabled: Story = {
       },
     },
   },
-  render: () => (
-    <Switch
-      disabled
-      aria-label="Toby's Opinion Switch (Permanently Disabled)"
-    />
-  ),
+  render: () => <Switch disabled />,
 };
 
 export const WithLabel: Story = {
@@ -128,16 +119,9 @@ export const WithLabel: Story = {
     },
   },
   render: () => (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        cursor: "pointer",
-      }}
-    >
-      <Switch aria-labelledby="switch-label-example" />
-      <span id="switch-label-example">Kevin's Famous Chili Mode</span>
+    <label>
+      <Switch />
+      Kevin's Famous Chili Mode
     </label>
   ),
 };
@@ -154,39 +138,9 @@ export const Sizes: Story = {
   },
   render: () => (
     <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch size="sm" aria-label="Jim's Prank Switch" />
-        <span style={{ fontSize: 12 }}>Teapot Size</span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch size="md" aria-label="Standard Dundie Switch" />
-        <span style={{ fontSize: 12 }}>Dundie Size</span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch size="lg" aria-label="World's Best Boss Switch" />
-        <span style={{ fontSize: 12 }}>Boss Mug Size</span>
-      </div>
+      <Switch size="sm" />
+      <Switch size="md" />
+      <Switch size="lg" />
     </div>
   ),
 };
@@ -203,39 +157,9 @@ export const Colors: Story = {
   },
   render: () => (
     <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch color="brand" aria-label="Dunder Mifflin Corporate Blue" />
-        <span style={{ fontSize: 12 }}>Scranton Blue</span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch color="accent" aria-label="Schrute Farms Beet Purple" />
-        <span style={{ fontSize: 12 }}>Beet Farm Purple</span>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 8,
-          alignItems: "center",
-        }}
-      >
-        <Switch color="alert" aria-label="Fire Drill Emergency Red" />
-        <span style={{ fontSize: 12 }}>Fire Drill Red</span>
-      </div>
+      <Switch color="brand" />
+      <Switch color="accent" />
+      <Switch color="alert" />
     </div>
   ),
 };

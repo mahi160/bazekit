@@ -45,7 +45,7 @@ export const Basic: Story = {
   render: () => (
     <Avatar>
       <AvatarImage
-        src="https://picsum.photos/seed/michael-scott/160"
+        src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=m"
         alt="Michael Scott"
       />
       <AvatarFallback>MS</AvatarFallback>
@@ -65,10 +65,7 @@ export const Fallback: Story = {
   },
   render: () => (
     <Avatar>
-      <AvatarImage
-        src="https://invalid.example/missing.jpg"
-        alt="Jim Halpert"
-      />
+      <AvatarImage src="#" alt="Jim Halpert" />
       <AvatarFallback>JH</AvatarFallback>
     </Avatar>
   ),
@@ -88,14 +85,14 @@ export const Group: Story = {
     <AvatarGroup>
       <Avatar>
         <AvatarImage
-          src="https://picsum.photos/seed/dwight/160"
+          src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=d"
           alt="Dwight Schrute"
         />
         <AvatarFallback>DS</AvatarFallback>
       </Avatar>
       <Avatar>
         <AvatarImage
-          src="https://picsum.photos/seed/pam/160"
+          src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=p"
           alt="Pam Beesly"
         />
         <AvatarFallback>PB</AvatarFallback>
@@ -124,14 +121,14 @@ export const Mixed: Story = {
     <AvatarGroup>
       <Avatar>
         <AvatarImage
-          src="https://picsum.photos/seed/stanley/160"
+          src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=p"
           alt="Stanley Hudson"
         />
         <AvatarFallback>SH</AvatarFallback>
       </Avatar>
       <Avatar>
         <AvatarImage
-          src="https://invalid.example/offline.jpg"
+          src="https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=c"
           alt="Creed Bratton"
         />
         <AvatarFallback>CB</AvatarFallback>

@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   AccordionTrigger,
 } from "./Accordion";
+import { Button } from "../button/Button";
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -142,34 +143,12 @@ export const Controlled: Story = {
           {baseItems}
         </Accordion>
         <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-          <button
-            type="button"
-            onClick={() => setOpen(["item-1", "item-2", "item-3"])}
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#28a745",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
+          <Button onClick={() => setOpen(["item-1", "item-2", "item-3"])}>
             Hire Everyone
-          </button>
-          <button
-            type="button"
-            onClick={() => setOpen([])}
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#dc3545",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
+          </Button>
+          <Button variant="alert" onClick={() => setOpen([])}>
             You're All Fired
-          </button>
+          </Button>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Checkbox, CheckboxGroup } from "./Checkbox";
+import { Button } from "../button/Button";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Components/Checkbox",
@@ -43,15 +44,8 @@ export const Default: Story = {
     },
   },
   render: () => (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        cursor: "pointer",
-      }}
-    >
-      <Checkbox />I agree that Jim is not a bear
+    <label>
+      <Checkbox /> I agree that Jim is not a bear
     </label>
   ),
 };
@@ -66,14 +60,7 @@ export const Checked: Story = {
     },
   },
   render: () => (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        cursor: "pointer",
-      }}
-    >
+    <label>
       <Checkbox defaultChecked />
       Bears eat beets
     </label>
@@ -91,25 +78,11 @@ export const Disabled: Story = {
   },
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-      <label
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          opacity: 0.5,
-        }}
-      >
+      <label>
         <Checkbox disabled />
         Michael is the best boss (HR disabled this)
       </label>
-      <label
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          opacity: 0.5,
-        }}
-      >
+      <label>
         <Checkbox disabled defaultChecked />
         That's what she said (permanently enabled)
       </label>
@@ -127,14 +100,7 @@ export const Indeterminate: Story = {
     },
   },
   render: () => (
-    <label
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "12px",
-        cursor: "pointer",
-      }}
-    >
+    <label>
       <Checkbox indeterminate />
       Sometimes I'll start a sentence and I don't even know where it's going
     </label>
@@ -155,22 +121,14 @@ export const Controlled: Story = {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            cursor: "pointer",
-          }}
-        >
+        <label>
           <Checkbox checked={checked} onCheckedChange={setChecked} />I declare
           BANKRUPTCY!
         </label>
         <div>
-          Declaration Status:{" "}
-          {checked
-            ? "Michael has officially declared it!"
-            : "Awaiting declaration..."}
+          <Button onClick={() => setChecked((p) => !p)}>
+            Toggle Bankruptcy
+          </Button>
         </div>
       </div>
     );
@@ -189,78 +147,29 @@ export const Group: Story = {
   render: function Render() {
     const [selected, setSelected] = useState<string[]>([]);
 
-    const handleChange = (value: string, checked: boolean) => {
-      if (checked) {
-        setSelected([...selected, value]);
-      } else {
-        setSelected(selected.filter((item) => item !== value));
-      }
-    };
-
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        <CheckboxGroup>
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-          >
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <Checkbox
-                value="sales"
-                checked={selected.includes("sales")}
-                onCheckedChange={(checked) => handleChange("sales", checked)}
-              />
-              Sales (with Jim and Dwight's... dynamic)
-            </label>
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <Checkbox
-                value="accounting"
-                checked={selected.includes("accounting")}
-                onCheckedChange={(checked) =>
-                  handleChange("accounting", checked)
-                }
-              />
-              Accounting (home of Kevin's famous chili)
-            </label>
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <Checkbox
-                value="reception"
-                checked={selected.includes("reception")}
-                onCheckedChange={(checked) =>
-                  handleChange("reception", checked)
-                }
-              />
-              Reception (Pam's domain of artistry)
-            </label>
-          </div>
-        </CheckboxGroup>
-        {selected.length > 0 && (
-          <div>
-            Michael says you're hired for:{" "}
-            <strong>{selected.join(", ")}</strong>
-          </div>
-        )}
-      </div>
+      <CheckboxGroup
+        allValues={["sales", "accounting", "reception"]}
+        value={selected}
+        onValueChange={setSelected}
+      >
+        <label>
+          <Checkbox parent />
+          Office Department
+        </label>
+        <label>
+          <Checkbox value="sales" />
+          Sales (with Jim and Dwight's... dynamic)
+        </label>
+        <label>
+          <Checkbox value="accounting" />
+          Accounting (home of Kevin's famous chili)
+        </label>
+        <label>
+          <Checkbox value="reception" />
+          Reception (Pam's domain of artistry)
+        </label>
+      </CheckboxGroup>
     );
   },
 };

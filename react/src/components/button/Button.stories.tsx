@@ -121,8 +121,8 @@ export const Variants: Story = {
   },
   render: () => (
     <Stack>
-      <Button>World's Best Boss</Button>
-      <Button variant="secondary">Assistant to the Regional Manager</Button>
+      <Button>Best Boss</Button>
+      <Button variant="secondary">Regional Manager</Button>
       <Button variant="outline">Beet Farmer</Button>
       <Button variant="ghost">Silent Jim</Button>
       <Button variant="link">Dunder Mifflin</Button>
@@ -235,21 +235,6 @@ export const Disabled: Story = {
   ),
 };
 
-const LoadingExample: React.FC = () => {
-  const [loading, setLoading] = React.useState(false);
-  return (
-    <Button
-      disabled={loading}
-      onClick={() => {
-        setLoading(true);
-        setTimeout(() => setLoading(false), 1200);
-      }}
-    >
-      {loading ? "Michael is thinking…" : "Start Dundie Awards"}
-    </Button>
-  );
-};
-
 export const Loading: Story = {
   parameters: {
     docs: {
@@ -259,5 +244,18 @@ export const Loading: Story = {
       },
     },
   },
-  render: () => <LoadingExample />,
+  render: function LoadingExample() {
+    const [loading, setLoading] = React.useState(false);
+    return (
+      <Button
+        disabled={loading}
+        onClick={() => {
+          setLoading(true);
+          setTimeout(() => setLoading(false), 1200);
+        }}
+      >
+        {loading ? "Michael is thinking…" : "Start Dundie Awards"}
+      </Button>
+    );
+  },
 };
