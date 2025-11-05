@@ -12,10 +12,10 @@
   color: var(--primary);
 
   cursor: pointer;
-  transition: background-color var(--duration) ease, border-color var(--duration) ease, box-shadow var(--duration) ease;
+  transition: all var(--duration) ease-in-out;
   -webkit-tap-highlight-color: transparent;
 
-  &[disabled] {
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.55;
   }
@@ -30,9 +30,21 @@
     outline: 2px solid var(--focus);
     outline-offset: 2px;
   }
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
-
 .indicator {
-  display: flex;
+  opacity: 0;
+  transition: opacity var(--duration) ease-in-out;
+
+  &[data-checked] {
+    opacity: 1;
+  }
+
+  & svg {
+    fill: var(--primary-foreground);
+  }
 }

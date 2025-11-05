@@ -4,7 +4,7 @@ import styles from "./Checkbox.module.css";
 export function Checkbox(props: BaseCheckbox.Root.Props) {
   return (
     <BaseCheckbox.Root className={styles.checkbox} {...props}>
-      <BaseCheckbox.Indicator className={styles.indicator}>
+      <BaseCheckbox.Indicator className={styles.indicator} keepMounted>
         <CheckIcon />
       </BaseCheckbox.Indicator>
     </BaseCheckbox.Root>
@@ -18,7 +18,8 @@ function CheckIcon(props: React.ComponentProps<"svg">) {
       height="14px"
       viewBox="0 -960 960 960"
       width="14px"
-      fill="currentcolor"
+      focusable={false}
+      aria-hidden
       {...props}
     >
       <path d="M382-200 113-469l97-97 172 173 369-369 97 96-466 466Z" />
